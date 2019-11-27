@@ -26,4 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.dataSubscription.unsubscribe();
   }
 
+  private helloWorld(): string{
+    return "Hello, World";
+  }
+
 }
