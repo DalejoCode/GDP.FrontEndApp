@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegexValidatorsOptions } from './enums/regex-validators.enum';
+import { LoginService } from './services/login.service';
+import { LoginViewModel } from './models/user-login-data';
 
 @Component({
   selector: "app-login",
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private componentSubscription: Subscription;
 
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     this.componentSubscription = new Subscription();
@@ -31,7 +33,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.componentSubscription.unsubscribe();
   }
 
-  public tryLogin(){
+  public tryLogin() {
     console.warn(this.loginForm.value);
+    /**
+     * Use this lines when web Api is Up
+     *
+      const newUser = new LoginViewModel(this.loginForm.value['email'],  this.loginForm.value['password']);
+      this.loginService.tryToLogin(newUser).subscribe(response => {
+        if(response) {
+          // Do Something
+        } else {
+          // Do Something else
+        }
+      });
+    */
   }
 }
