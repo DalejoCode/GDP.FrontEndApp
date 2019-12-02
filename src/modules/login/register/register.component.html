@@ -3,10 +3,9 @@
 <div class="row">
   <div class="col l3 m2 s12"></div>
   <div class="col l6 m8 s12" style="opacity:0.8;padding-top:2%;">
-    <div
-      class="card-panel z-depth-4  border-radius-6 "
-      style="border-radius: 8px; "
-    >
+    <!-- #region form -->
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="card-panel z-depth-4  border-radius-6 "
+      style="border-radius: 8px; ">
       <h5 class>Regístrate</h5>
 
       <p>¡Únete a nosotros ya!</p>
@@ -14,57 +13,59 @@
       <div class="input-field">
         <i class="material-icons prefix">person</i>
 
-        <input type="text" name="username" id="username" />
+        <input type="text" formControlName="firstName" name="firstName" id="firstName"
+          [ngClass]="{ 'is-invalid': f.firstName.invalid && f.firstName.touched }" />
+        <label for="username">Ingrese su Nombre</label>
+      </div>
 
-        <label for="username">Nombre de usuario</label>
+      <div class="input-field">
+        <i class="material-icons prefix">person</i>
+        <input type="text" formControlName="lastName" name="lastName" id="lastName"
+          [ngClass]="{ 'is-invalid': f.lastName.invalid && f.lastName.touched }" />
+        <label for="username">Ingrese su Apellido</label>
       </div>
 
       <div class="input-field">
         <i class="material-icons prefix">email</i>
 
-        <input type="text" name="email" id="email" />
-
+        <input type="text" formControlName="email" name="email" id="email"  />
+        <div *ngIf="f.email.invalid && f.email.touched">Ingrese una dirección de correo valida.</div>
         <label for="email">Correo electrónico</label>
       </div>
 
       <div class="input-field">
         <i class="material-icons prefix">lock</i>
 
-        <input type="password" name="password" id="password" />
-
+        <input type="password" formControlName="password" name="password" id="password" />
+        <div *ngIf="f.password.invalid && f.password.touched" style="font-size:12px;">La contraseña debe contener minimo 8 caracteres incluyendo numeros,
+          mayusculas, minusculas y caracteres especiales</div>
         <label for="password">Contraseña</label>
       </div>
 
       <div class="input-field">
         <i class="material-icons prefix">lock</i>
-
-        <input type="text" name="password2" id="password2" />
-
+        <input type="password" formControlName="confirmPassword" name="password2" id="password2" />
+        <div *ngIf="f.confirmPassword.invalid && f.confirmPassword.touched" style="font-size:12px;">Las contraseñas deben coincidir</div>
         <label for="password2">Confirma tu contraseña</label>
       </div>
 
       <br />
       <div class="center">
-        <input
-          type="submit"
-          name=""
-          id=""
-          value="¡Regístrate ya!"
-          class="btn waves-effect waves-light"
-          style="width:100%; border-radius: 25px;"
-        />
+        <input type="submit" name="registerbtn" id="registerbtn" value="¡Regístrate ya!" class="btn waves-effect waves-light"
+          style="width:100%; border-radius: 25px;" [disabled]="!registerForm.valid" />
       </div>
 
       <br />
+
+      <!-- Aqui deberia ir un droptown con los tipos de usuarios -->
 
       <div class="">
-        <a href="index.html" class="left" style="font-size:12px;"
-          >¿Ya eres parte de nosotros? ¡Entra!</a
-        >
+        <a [routerLink]="['/feed/login']" class="left" style="font-size:12px;">¿Ya eres parte de nosotros? ¡Entra!</a>
       </div>
 
       <br />
-    </div>
+    </form>
+    <!-- #endregion form -->
   </div>
   <div class="col l3 m2 s12"></div>
 </div>

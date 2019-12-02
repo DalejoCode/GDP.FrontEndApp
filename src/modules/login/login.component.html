@@ -1,63 +1,37 @@
 <div class="querymine_image"></div>
-
 <div class="row">
   <div class="col l4 m2 s12"></div>
   <div class="col l4 m8 s12" style="opacity:0.8;padding-top:8%;">
-    <div
-      class="card-panel z-depth-4  border-radius-6 "
-      style="border-radius: 8px; "
-    >
-      <form action="" method="post">
+    <div class="card-panel z-depth-4  border-radius-6 " style="border-radius: 8px; ">
+      <form [formGroup]="loginForm" (ngSubmit)="tryLogin()">
         <h5 class>¡Ingresa!</h5>
-
         <br />
-
         <div class="input-field">
           <i class="material-icons prefix">person</i>
-
-          <input type="text" name="username" id="username" />
-
+          <input type="email" name="username" id="username" formControlName="email" />
           <label for="username">Correo electrónico</label>
         </div>
-
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
-
-          <input type="text" name="password" id="password" />
-
+          <input type="password" name="password" id="password" formControlName="password" />
           <label for="password">Contraseña</label>
         </div>
-
-        <input type="checkbox" name="checkbox" id="checkbox" />
-
+        <input type="checkbox" name="checkbox" id="checkbox" formControlName="remember" />
         <label for="checkbox">¡Recúerdame!</label><br />
-
         <br />
         <div class="center">
-          <button
-            type="submit"
-            name="login"
-            id=""
-            value="Login"
-            class="btn waves-effect waves-light "
-            style="width:100%; border-radius: 25px;"
-          >
+          <button type="submit" name="login" id="" value="Login" class="btn waves-effect waves-light "
+            style="width:100%; border-radius: 25px;" [disabled]="!loginForm.valid">
             Entra
           </button>
         </div>
-
         <br />
-
         <div class="">
-          <a href="register.html" class="left" style="font-size:12px;"
-            >!Únete ya!</a
-          >
+          <a [routerLink]="['/feed/register']" class="left" style="font-size:12px;">!Únete ya!</a>
         </div>
-
         <div class="margin medium-small" style="font-size:12px;">
           <a href="" class="right">¿La olvidaste?</a>
         </div>
-
         <br />
       </form>
     </div>

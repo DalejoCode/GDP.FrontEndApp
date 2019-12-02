@@ -5,7 +5,6 @@ import { HomeFilterService } from './services/home-filter.service';
 import { ICompany, IAddress, SendDataModel } from './models/user-model';
 import { ModuleDataSenderService } from '@services/module-data-sender.service';
 import { Router } from '@angular/router';
-import { LoginViewModel } from './models/user-login-data';
 
 @Component({
   selector: 'app-home',

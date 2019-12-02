@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ModuleDataSenderService } from "@services/module-data-sender.service";
 import { Subscription } from "rxjs";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegexValidatorsOptions } from './enums/regex-validators.enum';
+import { LoginService } from './services/login.service';
+import { LoginViewModel } from './models/user-login-data';
 
 @Component({
   selector: "app-login",
@@ -8,23 +11,41 @@ import { Subscription } from "rxjs";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  public requestValues: string;
-  private dataSubscription: Subscription;
 
-  constructor(private dataSenderService: ModuleDataSenderService) {}
+  public loginForm = new FormGroup({
+    email: new FormControl('',
+      [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.EMAIL_REGEX))]),
+    password: new FormControl('',
+      [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.PASSWORD_REGEX))]),
+    remember: new FormControl('')
+  });
+
+  private componentSubscription: Subscription;
+
+
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
-    this.dataSubscription = this.dataSenderService
-      .getValuesRx()
-      .subscribe(value => {
-        if (value) {
-          this.requestValues =
-            value.val1 + " - " + value.val2 + " - " + value.val3;
-        }
-      });
+    this.componentSubscription = new Subscription();
   }
 
   ngOnDestroy() {
-    this.dataSubscription.unsubscribe();
+    this.componentSubscription.unsubscribe();
+  }
+
+  public tryLogin() {
+    console.warn(this.loginForm.value);
+    /**
+     * Use this lines when web Api is Up
+     *
+      const newUser = new LoginViewModel(this.loginForm.value['email'],  this.loginForm.value['password']);
+      this.loginService.tryToLogin(newUser).subscribe(response => {
+        if(response) {
+          // Do Something
+        } else {
+          // Do Something else
+        }
+      });
+    */
   }
 }

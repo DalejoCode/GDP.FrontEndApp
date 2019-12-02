@@ -4,8 +4,11 @@
     height: 100%;
     background-size: cover;
   }
-  
+
   .row {
     display: inline;
   }
-  
+
+  .isInvalid {
+    border: 0.7px solid red;
+  }
