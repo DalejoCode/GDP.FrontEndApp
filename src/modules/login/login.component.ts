@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { RegexValidatorsOptions } from './enums/regex-validators.enum';
 import { LoginService } from './services/login.service';
 import { LoginViewModel } from './models/user-login-data';
+import { LoggerService } from '@services/logger.service';
 
 @Component({
   selector: "app-login",
@@ -12,29 +13,34 @@ import { LoginViewModel } from './models/user-login-data';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  public loginForm = new FormGroup({
-    email: new FormControl('',
-      [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.EMAIL_REGEX))]),
-    password: new FormControl('',
-      [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.PASSWORD_REGEX))]),
-    remember: new FormControl('')
-  });
+  public loginForm: FormGroup;
 
   private componentSubscription: Subscription;
 
-
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+    private logger: LoggerService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.componentSubscription = new Subscription();
+    this.loginForm = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.EMAIL_REGEX))]],
+        password: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.PASSWORD_REGEX))]],
+        remember: [false]
+      }
+    );
   }
 
   ngOnDestroy() {
     this.componentSubscription.unsubscribe();
   }
 
+  /** convenience getter for easy access to form fields */
+  get f(): FormGroup["controls"] { return this.loginForm.controls; }
+
   public tryLogin() {
-    console.warn(this.loginForm.value);
+    this.logger.warn(this.loginForm.value);
     /**
      * Use this lines when web Api is Up
      *
