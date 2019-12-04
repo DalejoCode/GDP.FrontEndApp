@@ -13,23 +13,23 @@
       <div class="input-field">
         <i class="material-icons prefix">person</i>
 
-        <input type="text" formControlName="firstName" name="firstName" id="firstName"
-          [ngClass]="{ 'is-invalid': f.firstName.invalid && f.firstName.touched }" />
-        <label for="username">Ingrese su Nombre</label>
+        <input type="text" formControlName="firstName" name="firstName" id="firstName" />
+        <div *ngIf="f.firstName.invalid && f.firstName.touched" style="font-size:12px;">Este campo es obligatorio.</div>
+        <label for="username">Ingrese su nombre</label>
       </div>
 
       <div class="input-field">
         <i class="material-icons prefix">person</i>
-        <input type="text" formControlName="lastName" name="lastName" id="lastName"
-          [ngClass]="{ 'is-invalid': f.lastName.invalid && f.lastName.touched }" />
-        <label for="username">Ingrese su Apellido</label>
+        <input type="text" formControlName="lastName" name="lastName" id="lastName" />
+        <div *ngIf="f.lastName.invalid && f.lastName.touched" style="font-size:12px;">Este campo es obligatorio.</div>
+        <label for="username">Ingrese su apellido</label>
       </div>
 
       <div class="input-field">
         <i class="material-icons prefix">email</i>
 
         <input type="text" formControlName="email" name="email" id="email"  />
-        <div *ngIf="f.email.invalid && f.email.touched">Ingrese una dirección de correo valida.</div>
+        <div *ngIf="f.email.invalid && f.email.touched" style="font-size:12px;">Ingrese una dirección de correo valida.</div>
         <label for="email">Correo electrónico</label>
       </div>
 

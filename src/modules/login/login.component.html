@@ -9,11 +9,13 @@
         <div class="input-field">
           <i class="material-icons prefix">person</i>
           <input type="email" name="username" id="username" formControlName="email" />
+          <div *ngIf="f.email.invalid && f.email.touched" style="font-size:12px;">Ingrese una dirección de correo valida.</div>
           <label for="username">Correo electrónico</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
           <input type="password" name="password" id="password" formControlName="password" />
+          <div *ngIf="f.password.invalid && f.password.touched" style="font-size:12px;">Ingrese una contraseña valida.</div>
           <label for="password">Contraseña</label>
         </div>
         <input type="checkbox" name="checkbox" id="checkbox" formControlName="remember" />
