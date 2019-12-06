@@ -1,14 +1,19 @@
 .querymine_image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-  }
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
 
-  .row {
-    display: inline;
-  }
+.row {
+  display: inline;
+}
 
-  .isInvalid {
-    border: 0.7px solid red;
-  }
+.isInvalid {
+  border: 0.7px solid red;
+}
+
+.image_div {
+  padding-right: 10%;
+  padding-left: 10%;
+}
