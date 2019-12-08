@@ -5,6 +5,7 @@ import { HomeFilterService } from './services/home-filter.service';
 import { ICompany, IAddress, SendDataModel } from './models/user-model';
 import { ModuleDataSenderService } from '@services/module-data-sender.service';
 import { Router } from '@angular/router';
+import { LoggerService } from '@services/logger.service';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private userSubscription: Subscription;
 
-  constructor(private homeFilterService: HomeFilterService, private senderService: ModuleDataSenderService, private router: Router) { }
+  constructor(private homeFilterService: HomeFilterService, 
+    private senderService: ModuleDataSenderService, private router: Router,
+    private logger: LoggerService) { }
 
   ngOnInit() {
 
@@ -52,6 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(["/Login"]);
   }
 
-  public TryLogin(): void{ }
+  public TryLogin(): void{
+  }
 
 }
