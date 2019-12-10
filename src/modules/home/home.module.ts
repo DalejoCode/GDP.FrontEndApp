@@ -5,7 +5,8 @@ import { HomeComponent } from '../home/home.component';
 import { SiteUnderConstructionComponent } from './components/site-under-construction/site-under-construction.component';
 import { CanActivateMaintenance } from '@providers/can-activate-maintenance';
 import { MatSelectModule } from '@angular/material'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MzButtonModule, MzInputModule } from "ngx-materialize";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent, SiteUnderConstructionComponent],
@@ -14,7 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeRoutingModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MzButtonModule,
+    MzInputModule
   ],
   providers: [
     CanActivateMaintenance

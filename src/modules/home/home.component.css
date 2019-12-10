@@ -1,0 +1,56 @@
+.group-inputs {
+  background: white;
+  margin: 30px;
+  width: 100%;
+}
+
+.trip-searcher {
+  display: inline-block;
+  width: 96.2%;
+  z-index: 9999;
+  position: absolute;
+  top: 40%;
+  margin: auto;
+  left: 2%;
+}
+
+.trip-searcher > .input-field {
+  float: left;
+  width: 20%;
+}
+
+@media (min-width: 1025px){
+    .btn-search {
+        position: relative;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        padding-left: 83% ;
+    }
+}
+
+@media (max-width: 1024px) {
+  .trip-searcher > .input-field {
+    float: left;
+    width: 50%;
+  }
+
+  .trip-searcher > .btn-filter {
+    width: 50%;
+    padding-bottom: 2%;
+  }
+}
+
+@media (max-width: 450px) {
+  .trip-searcher {
+    display: inline-block;
+    width: 95%;
+  }
+
+  .trip-searcher > .input-field {
+    width: 100%;
+  }
+
+  .trip-searcher > .btn-filter {
+    width: 50%;
+  }
+}

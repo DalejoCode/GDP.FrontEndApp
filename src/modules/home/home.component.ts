@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private logger: LoggerService) { }
 
   ngOnInit() {
-
+    this.initSelect();
   }
 
   ngOnDestroy() {
@@ -56,6 +56,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public TryLogin(): void{
+  }
+
+  public initSelect(){
+    $(document).ready(function(){
+      $('select').material_select();
+      $('.slider').slider();
+    });
   }
 
 }
