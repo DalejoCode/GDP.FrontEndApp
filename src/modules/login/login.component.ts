@@ -40,18 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   get f(): FormGroup["controls"] { return this.loginForm.controls; }
 
   public tryLogin() {
-    this.logger.warn(this.loginForm.value);
-    /**
-     * Use this lines when web Api is Up
-     *
-      const newUser = new LoginViewModel(this.loginForm.value['email'],  this.loginForm.value['password']);
-      this.loginService.tryToLogin(newUser).subscribe(response => {
-        if(response) {
-          // Do Something
-        } else {
-          // Do Something else
-        }
-      });
-    */
+    const newUser = new LoginViewModel(this.loginForm.value['email'], this.loginForm.value['password']);
+    this.loginService.tryToLogin(newUser).subscribe(response => {
+      if (response) {
+        this.logger.log("Success login for " + newUser.email);
+      } else {
+        this.logger.log("Login fail for user " + newUser.email);
+      }
+    });
   }
 }
