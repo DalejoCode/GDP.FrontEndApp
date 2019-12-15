@@ -5,6 +5,8 @@ import { RegexValidatorsOptions } from './enums/regex-validators.enum';
 import { LoginService } from './services/login.service';
 import { LoginViewModel } from './models/user-login-data';
 import { LoggerService } from '@services/logger.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RedirectService } from '@services/redirect.service';
 
 @Component({
   selector: "app-login",
@@ -19,17 +21,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private loginService: LoginService,
     private logger: LoggerService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private redirectService: RedirectService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.componentSubscription = new Subscription();
-    this.loginForm = this.formBuilder.group(
-      {
-        email: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.EMAIL_REGEX))]],
-        password: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.PASSWORD_REGEX))]],
-        remember: [false]
-      }
-    );
+    this.buildForms();
+    this.doSubscriptions();
   }
 
   ngOnDestroy() {
@@ -39,14 +37,34 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** convenience getter for easy access to form fields */
   get f(): FormGroup["controls"] { return this.loginForm.controls; }
 
-  public tryLogin() {
-    const newUser = new LoginViewModel(this.loginForm.value['email'], this.loginForm.value['password']);
-    this.loginService.tryToLogin(newUser).subscribe(response => {
-      if (response) {
-        this.logger.log("Success login for " + newUser.email);
-      } else {
-        this.logger.log("Login fail for user " + newUser.email);
+  private buildForms(): void {
+    this.loginForm = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.EMAIL_REGEX))]],
+        password: ['', [Validators.required, Validators.pattern(new RegExp(RegexValidatorsOptions.PASSWORD_REGEX))]],
+        remember: [false]
       }
-    });
+    );
+  }
+
+  private doSubscriptions(): void {
+    this.componentSubscription = new Subscription();
+    this.componentSubscription.add(this.loginService.getUserLoginRx().subscribe(response => {
+      if(response && response.success){
+        this.redirectService.redirectToHomePage();
+      } else if(response && !response.success){
+        this._snackBar.open(response.message, 'Aceptar', {
+          duration: 2000,
+        });
+      }
+    }));
+  }
+
+  public tryLogin() {
+    this.loginService.tryToLogin(
+      new LoginViewModel(
+        this.loginForm.value['password'],
+        this.loginForm.value['email']
+      ));
   }
 }

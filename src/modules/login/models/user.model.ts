@@ -1,13 +1,11 @@
 import { UserTypeEnum } from './enums/user-type.enum';
 
 export class User {
-  constructor(public name: string,
-    public lastName: string,
-    public password: string,
-    public userType: UserTypeEnum,
-    public contact: UserContact) { }
-}
-
-export class UserContact {
-  constructor(public city: string, public phone: string, public email: string) { }
+  constructor(public Name: string,
+    public LastName: string,
+    public Password: string,
+    public UserType: UserTypeEnum,
+    public City: string,
+    public Phone: string,
+    public Email: string) { }
 }
