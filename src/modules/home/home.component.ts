@@ -1,20 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
-import { Subscription, from } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HomeFilterService } from './services/home-filter.service';
-import { ICompany, IAddress, SendDataModel } from './models/user-model';
 import { ModuleDataSenderService } from '@services/module-data-sender.service';
 import { Router } from '@angular/router';
 import { LoggerService } from '@services/logger.service';
+import { MzSelectContainerComponent } from 'ngx-materialize';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-
-
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   public title = 'materialApp';
   public selectedValue1: string;
   public selectedValue2: string;
@@ -25,9 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public hasAccess: string;
 
-  public companies: ICompany[];
-  public addresses: IAddress[];
-
   public arrMin = [1, 0, -1, 3];
   public foods: any[] = [
     { value: 'steak', display: 'Steak' },
@@ -37,32 +32,28 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private userSubscription: Subscription;
 
-  constructor(private homeFilterService: HomeFilterService, 
+  constructor(private homeFilterService: HomeFilterService,
     private senderService: ModuleDataSenderService, private router: Router,
-    private logger: LoggerService) { }
+    private logger: LoggerService, private M: MzSelectContainerComponent) { }
 
   ngOnInit() {
-    this.initSelect();
+
   }
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
   }
 
+  ngAfterViewInit() {
+      $('select').material_select();
+      $('.slider').slider();
+  }
+
   public sendDataToModules(): void {
-    const dataToSend = new SendDataModel(this.selectedValue1, this.selectedValue2, this.selectedValue3);
-    this.senderService.sendANewValue(dataToSend);
-    this.router.navigate(["/Login"]);
+
   }
 
   public TryLogin(): void{
-  }
-
-  public initSelect(){
-    $(document).ready(function(){
-      $('select').material_select();
-      $('.slider').slider();
-    });
   }
 
 }
