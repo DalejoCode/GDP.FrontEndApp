@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { Subscription, from } from "rxjs";
+import { Subscription } from "rxjs";
 import { HomeFilterService } from "./services/home-filter.service";
 import { ModuleDataSenderService } from "@services/module-data-sender.service";
 import { Router } from "@angular/router";
 import { LoggerService } from "@services/logger.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IMarket } from './models/market.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: "app-home",
@@ -12,44 +14,59 @@ import { LoggerService } from "@services/logger.service";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public title = "materialApp";
-  public selectedValue1: string;
-  public selectedValue2: string;
-  public selectedValue3: string;
 
-  public email: string;
-  public password: string;
-
-  public hasAccess: string;
-
-  public arrMin = [1, 0, -1, 3];
-  public foods: any[] = [
-    { value: "steak", display: "Steak" },
-    { value: "pizza", display: "Pizza" },
-    { value: "tacos", display: "Tacos" }
-  ];
-
-  private userSubscription: Subscription;
+  public marketList: IMarket[];
+  public searcherForm: FormGroup;
+  private componentSubscriptions: Subscription;
 
   constructor(private homeFilterService: HomeFilterService,
     private senderService: ModuleDataSenderService, private router: Router,
-    private logger: LoggerService) { }
+    private logger: LoggerService, private _snackBar: MatSnackBar,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.marketList = [];
+    this.initSelect();
+    this.buildForms();
+    this.doSubscriptions();
+    this.homeFilterService.getAllMarkets();
+  }
 
+  get f(): FormGroup["controls"] { return this.searcherForm.controls; }
+
+  public searchResults(): void {
+    this.logger.info('Data', this.searcherForm.value)
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.componentSubscriptions.unsubscribe();
   }
 
-  public sendDataToModules(): void {
-
+  private doSubscriptions(): void {
+    this.componentSubscriptions = new Subscription();
+    this.componentSubscriptions.add(this.homeFilterService.getMarketsRx().subscribe(marketResponse => {
+      this.marketList = [];
+      if(marketResponse && marketResponse.success) {
+        this.marketList = marketResponse.markets;
+      } else if(marketResponse && !marketResponse.success) {
+        this.marketList = marketResponse.markets;
+        this._snackBar.open("Upps!!, A ocurrido un error al intentar obtener los destinos", 'Aceptar', {
+          duration: 2000,
+        });
+      }
+    }));
   }
 
-  public TryLogin(): void {}
+  private buildForms(): void {
+    this.searcherForm = this.formBuilder.group({
+      origen: ['1', Validators.required],
+      destino: ['', Validators.required],
+      fechaSalida: ['', Validators.required],
+      numeroPasajeros: ['', [Validators.required, Validators.min(1), Validators.max(7)]]
+    });
+  }
 
-  public initSelect() {
+  private initSelect() {
     $(document).ready(function() {
       $("select").material_select();
       $(".slider").slider();

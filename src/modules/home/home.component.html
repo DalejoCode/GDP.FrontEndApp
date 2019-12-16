@@ -26,29 +26,27 @@
     </li>
   </ul>
 </div>
-<div class="group-inputs">
+<form class="group-inputs" [formGroup]="searcherForm" (ngSubmit)="searchResults()">
   <div class="row trip-searcher">
     <div class="input-field col s12 m6 l3">
-      <select>
-        <option value="" disabled selected>Manizales (MNZ)</option>
+      <select formControlName="origen">
+        <option [value]="'1'" selected>Manizales (MNZ)</option>
       </select>
       <label>Origen</label>
     </div>
     <div class="input-field col s12 m6 l3">
-      <select>
-        <option value="" disabled selected>Destino</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+      <select formControlName="destino">
+        <option [value]="" disabled>Destino</option>
+        <option *ngFor="let market of marketList" [value]="market.Id">{{ market.Id }} - {{ market.Name }} ({{ market.Code }})</option>
       </select>
       <label>Destino</label>
     </div>
     <div class="input-field col s12 m6 l3">
-      <input type="text" class="datepicker" />
+      <input type="text" class="datepicker" formControlName="fechaSalida" />
       <label>Fecha de salida</label>
     </div>
     <div class="input-field col s12 m6 l3">
-      <input id="number_of_seats" type="text" class="validate" />
+      <input id="number_of_seats" type="text" class="validate" formControlName="numeroPasajeros" />
       <label for="number_of_seats">Número de asientos</label>
     </div>
   </div>
@@ -58,10 +56,9 @@
         class="btn-large waves-effect waves-light"
         type="submit"
         name="action"
-      >
-        Buscar
+      > Buscar
         <i class="material-icons right">send</i>
       </button>
     </div>
   </div>
-</div>
+</form>
