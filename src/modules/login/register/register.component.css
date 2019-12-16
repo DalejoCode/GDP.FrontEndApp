@@ -8,3 +8,12 @@
 .row {
   display: inline;
 }
+
+.isInvalid {
+  border: 0.7px solid red;
+}
+
+.image_div {
+  padding-right: 10%;
+  padding-left: 10%;
+}

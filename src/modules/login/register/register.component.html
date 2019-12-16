@@ -1,0 +1,137 @@
+<div class="querymine_image"></div>
+
+<div class="row">
+  <div class="col l3 m2 s12"></div>
+  <div class="col l6 m8 s12" style="opacity:0.8;padding-top:2%;">
+
+    <form class="card-panel z-depth-4  border-radius-6 " style="border-radius: 8px; ">
+      <div class="image_div">
+        <img class="responsive-img" data-caption="Manage My Bus"
+          src="/assets/images/logo_unasolalinea_transparente.png" />
+      </div>
+      <h5 class>Regístrate</h5>
+
+      <p>¡Únete a nosotros ya!</p>
+
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="panelRegisterState">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Paso 1.
+            </mat-panel-title>
+            <mat-panel-description>
+              Información Personal
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <!-- form register info -->
+          <form [formGroup]="registerForm" (ngSubmit)="submitFirstStep()">
+            <div class="input-field">
+              <i class="material-icons prefix">person</i>
+
+              <input type="text" formControlName="firstName" name="firstName" id="firstName" />
+              <div *ngIf="f.firstName.invalid && f.firstName.touched" style="font-size:12px;">
+                Este campo es obligatorio.
+              </div>
+              <label for="username">Ingrese su nombre</label>
+            </div>
+
+            <div class="input-field">
+              <i class="material-icons prefix">person</i>
+              <input type="text" formControlName="lastName" name="lastName" id="lastName" />
+              <div *ngIf="f.lastName.invalid && f.lastName.touched" style="font-size:12px;">
+                Este campo es obligatorio.
+              </div>
+              <label for="username">Ingrese su apellido</label>
+            </div>
+
+            <div class="input-field">
+              <i class="material-icons prefix">lock</i>
+
+              <input type="password" formControlName="password" name="password" id="password" />
+              <div *ngIf="f.password.invalid && f.password.touched" style="font-size:12px;">
+                La contraseña debe contener minimo 8 caracteres incluyendo numeros,
+                mayusculas, minusculas y caracteres especiales
+              </div>
+              <label for="password">Contraseña</label>
+            </div>
+
+            <div class="input-field">
+              <i class="material-icons prefix">lock</i>
+              <input type="password" formControlName="confirmPassword" name="password2" id="password2" />
+              <div *ngIf="f.confirmPassword.invalid && f.confirmPassword.touched" style="font-size:12px;">
+                Las contraseñas deben coincidir
+              </div>
+              <label for="password2">Confirma tu contraseña</label>
+            </div>
+
+            <br />
+            <div class="center">
+              <input type="submit" name="registerbtn" id="registerbtn" value="Continuar"
+                class="btn waves-effect waves-light" style="width:90%; border-radius: 25px;"
+                [disabled]="!registerForm.valid" />
+            </div>
+          </form>
+        </mat-expansion-panel>
+        <mat-expansion-panel [disabled]="!registerForm.valid" [expanded]="panelContactState">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Paso 2.
+            </mat-panel-title>
+            <mat-panel-description>
+              Datos de contacto
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form [formGroup]="contactForm" (ngSubmit)="registerUser()">
+            <div class="input-field">
+              <i class="material-icons prefix">lock</i>
+              <input type="text" formControlName="city" name="city" id="city" />
+              <div *ngIf="fc.city.invalid && fc.city.touched" style="font-size:12px;">
+                Este campo es requerido
+              </div>
+              <label for="city">Ingrese su Ciudad</label>
+            </div>
+
+            <div class="input-field">
+              <i class="material-icons prefix">lock</i>
+              <input type="text" formControlName="phone" name="phone" id="phone" />
+              <div *ngIf="fc.phone.invalid && fc.phone.touched" style="font-size:12px;">
+                Este campo es requerido
+              </div>
+              <label for="phone">Ingrese su telefono</label>
+            </div>
+
+            <div class="input-field">
+              <i class="material-icons prefix">lock</i>
+              <input type="text" formControlName="email" name="email" id="email" />
+              <div *ngIf="fc.email.invalid && fc.email.touched" style="font-size:12px;">
+                Ingrese una dirección de correo valida.
+              </div>
+              <label for="email">Correo electrónico</label>
+            </div>
+
+            <br />
+            <div class="center">
+              <input type="submit" name="registercbtn" id="registercbtn" value="¡Regístrate ya!"
+                class="btn waves-effect waves-light" style="width:90%; border-radius: 25px;"
+                [disabled]="!contactForm.valid" />
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <br />
+
+      <!-- Aqui deberia ir un droptown con los tipos de usuarios -->
+
+      <div class="">
+        <a [routerLink]="['/feed/login']" class="left" style="font-size:12px;">¿Ya eres parte de nosotros? ¡Entra!</a>
+      </div>
+
+      <br />
+    </form>
+
+
+    <!-- #endregion form -->
+  </div>
+  <div class="col l3 m2 s12"></div>
+</div>
