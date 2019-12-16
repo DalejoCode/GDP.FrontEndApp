@@ -1,44 +1,38 @@
-<!-- <div class="slider fullscreen">
+<div class="slider fullscreen">
   <ul class="slides">
     <li>
       <img src="/assets/images/van.jpg" />
       <div class="caption center-align">
-        <h3>This is our big Tagline!</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Manage My Bus</h3>
       </div>
     </li>
     <li>
       <img src="/assets/images/women.jpg" />
       <div class="caption left-align">
-        <h3>Left Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Manage My Bus</h3>
       </div>
     </li>
     <li>
       <img src="/assets/images/smart.jpg" />
       <div class="caption right-align">
-        <h3>Right Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Manage My Bus</h3>
       </div>
     </li>
     <li>
       <img src="/assets/images/low.jpg" />
       <div class="caption center-align">
-        <h3>This is our big Tagline!</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Manage My Bus</h3>
       </div>
     </li>
   </ul>
-</div> -->
+</div>
 <div class="group-inputs">
   <div class="row trip-searcher">
     <div class="input-field col s12 m6 l3">
       <select>
-        <option value="" disabled selected>Origen</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+        <option value="" disabled selected>Manizales (MNZ)</option>
       </select>
+      <label>Origen</label>
     </div>
     <div class="input-field col s12 m6 l3">
       <select>
@@ -47,27 +41,24 @@
         <option value="2">Option 2</option>
         <option value="3">Option 3</option>
       </select>
+      <label>Destino</label>
     </div>
     <div class="input-field col s12 m6 l3">
-      <select>
-        <option value="" disabled selected>Fecha</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-      </select>
+      <input type="text" class="datepicker" />
+      <label>Fecha de salida</label>
     </div>
     <div class="input-field col s12 m6 l3">
-      <select>
-        <option value="" disabled selected>N° asientos</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-      </select>
+      <input id="number_of_seats" type="text" class="validate" />
+      <label for="number_of_seats">Número de asientos</label>
     </div>
   </div>
   <div class="row">
-    <div class="btn-filter btn-search col s12 m6 l2">
-      <button class="btn waves-effect waves-light" type="submit" name="action">
+    <div class="col s10 center-align">
+      <button
+        class="btn-large waves-effect waves-light"
+        type="submit"
+        name="action"
+      >
         Buscar
         <i class="material-icons right">send</i>
       </button>
