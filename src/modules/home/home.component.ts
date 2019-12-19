@@ -7,6 +7,8 @@ import { LoggerService } from "@services/logger.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IMarket } from './models/market.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelect, MatFormField, MatPlaceholder, MatLabel } from '@angular/material';
+import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
 
 @Component({
   selector: "app-home",
@@ -19,6 +21,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public searcherForm: FormGroup;
   private componentSubscriptions: Subscription;
 
+  public myFilter = (datepickerDate: Date): boolean => {
+    const currentDate = new Date();
+    const validate = DateValidatorHelper.compareTwoDates(datepickerDate, currentDate)
+    return validate === CompareResultEnum.EQUAL || validate === CompareResultEnum.GREATER;
+  }
+
   constructor(private homeFilterService: HomeFilterService,
     private senderService: ModuleDataSenderService, private router: Router,
     private logger: LoggerService, private _snackBar: MatSnackBar,
@@ -28,8 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.marketList = [];
     this.initSelect();
     this.buildForms();
-    this.doSubscriptions();
     this.homeFilterService.getAllMarkets();
+    this.doSubscriptions();
   }
 
   get f(): FormGroup["controls"] { return this.searcherForm.controls; }

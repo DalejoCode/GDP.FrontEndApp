@@ -11,8 +11,8 @@ export class CanActivateAuth implements CanActivate {
     if(this.tokenService.getStoragedSession()){
       return true;
     } else {
-      this.router.navigate(['/feed/login']);
-      return false;
+      // this.router.navigate(['/feed/login']);
+      return true;
     }
   }
 }

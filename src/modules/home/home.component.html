@@ -1,4 +1,4 @@
-<div class="slider fullscreen">
+<div class="slider fullscreen" hidden>
   <ul class="slides">
     <li>
       <img src="/assets/images/van.jpg" />
@@ -26,27 +26,41 @@
     </li>
   </ul>
 </div>
-<form class="group-inputs" [formGroup]="searcherForm" (ngSubmit)="searchResults()">
+<form
+  class="group-inputs"
+  [formGroup]="searcherForm"
+  (ngSubmit)="searchResults()"
+>
   <div class="row trip-searcher">
     <div class="input-field col s12 m6 l3">
-      <select formControlName="origen">
-        <option [value]="'1'" selected>Manizales (MNZ)</option>
-      </select>
-      <label>Origen</label>
+      <mat-form-field>
+        <mat-select placeholder="Origen" formControlName="origen">
+          <mat-option value="" disabled>Elija un Origen</mat-option>
+          <mat-option value="1">Manizales (MNZ)</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="input-field col s12 m6 l3">
-      <select formControlName="destino">
-        <option [value]="" disabled>Destino</option>
-        <option *ngFor="let market of marketList" [value]="market.Id">{{ market.Id }} - {{ market.Name }} ({{ market.Code }})</option>
-      </select>
-      <label>Destino</label>
+      <mat-form-field>
+        <mat-select placeholder="Destino" formControlName="destino">
+          <mat-option value="" disabled>Elija un Destino</mat-option>
+          <mat-option *ngFor="let market of marketList" [value]="market.Id">{{ market.Name }} ({{ market.Code }})</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="input-field col s12 m6 l3">
-      <input type="text" class="datepicker" formControlName="fechaSalida" />
-      <label>Fecha de salida</label>
+      <input matInput [matDatepickerFilter]="myFilter" formControlName="fechaSalida"
+        [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </div>
     <div class="input-field col s12 m6 l3">
-      <input id="number_of_seats" type="text" class="validate" formControlName="numeroPasajeros" />
+      <input
+        id="number_of_seats"
+        type="text"
+        class="validate"
+        formControlName="numeroPasajeros"
+      />
       <label for="number_of_seats">Número de asientos</label>
     </div>
   </div>
@@ -56,7 +70,8 @@
         class="btn-large waves-effect waves-light"
         type="submit"
         name="action"
-      > Buscar
+      >
+        Buscar
         <i class="material-icons right">send</i>
       </button>
     </div>
