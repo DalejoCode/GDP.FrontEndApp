@@ -1,61 +1,95 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl } from "@angular/forms";
-import { Subscription, from } from 'rxjs';
-import { HomeFilterService } from './services/home-filter.service';
-import { ICompany, IAddress, SendDataModel } from './models/user-model';
-import { ModuleDataSenderService } from '@services/module-data-sender.service';
-import { Router } from '@angular/router';
-import { LoggerService } from '@services/logger.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { HomeFilterService } from "./services/home-filter.service";
+import { ModuleDataSenderService } from "@services/module-data-sender.service";
+import { Router } from "@angular/router";
+import { LoggerService } from "@services/logger.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IMarket } from './models/market.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelect, MatFormField, MatPlaceholder, MatLabel, MatIcon, MatDatepickerToggleIcon, MatFormFieldControl } from '@angular/material';
+import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
+import { GDPStorageService } from '@services/storage.service';
+import { RedirectService } from '@services/redirect.service';
+import { environment } from '@envs/environment';
+import { SearchModel } from './models/search.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+  public marketList: IMarket[];
+  public searcherForm: FormGroup;
+  private componentSubscriptions: Subscription;
 
-  public title = 'materialApp';
-  public selectedValue1: string;
-  public selectedValue2: string;
-  public selectedValue3: string;
+  public myFilter = (datepickerDate: Date): boolean => {
+    const currentDate = new Date();
+    const validate = DateValidatorHelper.compareTwoDates(datepickerDate, currentDate)
+    return validate === CompareResultEnum.EQUAL || validate === CompareResultEnum.GREATER;
+  }
 
-  public email: string;
-  public password: string;
-
-  public hasAccess: string;
-
-  public companies: ICompany[];
-  public addresses: IAddress[];
-
-  public arrMin = [1, 0, -1, 3];
-  public foods: any[] = [
-    { value: 'steak', display: 'Steak' },
-    { value: 'pizza', display: 'Pizza' },
-    { value: 'tacos', display: 'Tacos' }
-  ];
-
-  private userSubscription: Subscription;
-
-  constructor(private homeFilterService: HomeFilterService, 
+  constructor(private homeFilterService: HomeFilterService,
     private senderService: ModuleDataSenderService, private router: Router,
-    private logger: LoggerService) { }
+    private logger: LoggerService, private _snackBar: MatSnackBar,
+    private formBuilder: FormBuilder, private storage: GDPStorageService,
+    private redirectService: RedirectService) { }
 
   ngOnInit() {
+    this.marketList = [];
+    this.initSelect();
+    this.buildForms();
+    this.homeFilterService.getAllMarkets();
+    this.doSubscriptions();
+  }
 
+  get f(): FormGroup["controls"] { return this.searcherForm.controls; }
+
+  public searchResults(): void {
+    this.storage.setStorage(environment.search_key,
+      new SearchModel(this.searcherForm.value['origen'],
+        this.searcherForm.value['destino'],
+        this.searcherForm.value['fechaSalida'],
+        this.searcherForm.value['numeroPasajeros']));
+
+    this.redirectService.redirectToSearchPage();
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.componentSubscriptions.unsubscribe();
   }
 
-  public sendDataToModules(): void {
-    const dataToSend = new SendDataModel(this.selectedValue1, this.selectedValue2, this.selectedValue3);
-    this.senderService.sendANewValue(dataToSend);
-    this.router.navigate(["/Login"]);
+  private doSubscriptions(): void {
+    this.componentSubscriptions = new Subscription();
+    this.componentSubscriptions.add(this.homeFilterService.getMarketsRx().subscribe(marketResponse => {
+      this.marketList = [];
+      if(marketResponse && marketResponse.success) {
+        this.marketList = marketResponse.markets;
+      } else if(marketResponse && !marketResponse.success) {
+        this.marketList = marketResponse.markets;
+        this._snackBar.open("Upps!!, A ocurrido un error al intentar obtener los destinos", 'Aceptar', {
+          duration: 2000,
+        });
+      }
+    }));
   }
 
-  public TryLogin(): void{
+  private buildForms(): void {
+    this.searcherForm = this.formBuilder.group({
+      origen: [1, Validators.required],
+      destino: ['', Validators.required],
+      fechaSalida: ['', Validators.required],
+      numeroPasajeros: ['', [Validators.required, Validators.min(1), Validators.max(7)]]
+    });
   }
 
+  private initSelect() {
+    $(document).ready(function() {
+      $("select").material_select();
+      $(".slider").slider();
+      $(".datepicker").pickadate();
+    });
+  }
 }

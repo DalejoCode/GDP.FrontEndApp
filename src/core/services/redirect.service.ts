@@ -16,4 +16,12 @@ export class RedirectService {
     this.router.navigate(['/feed/login']);
   }
 
+  public redirectToSearchPage(): void {
+    this.router.navigate(['/booking/search']);
+  }
+
+  public redirectToBookingPage(): void {
+    this.router.navigate(['/booking/']);
+  }
+
 }

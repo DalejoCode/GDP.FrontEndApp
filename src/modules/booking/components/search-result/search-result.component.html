@@ -1,0 +1,24 @@
+<p *ngIf="!isLoading" class="route-info">
+  Mostrando resultados de <strong>Manizales (MNZ)</strong> a <strong>{{ searchInfo.destination.Name }} ({{ searchInfo.destination.Code }})</strong>
+</p>
+<ng-container *ngIf="isLoading">Loading...</ng-container>
+<ng-container *ngIf="showNoResults">{{ errorMessage }}</ng-container>
+<ng-container *ngIf="!showNoResults" class="parent-search">
+  <ng-container *ngFor="let search of searchResults">
+    <mat-card class="example-card" *ngFor="let available of search.Availability">
+      <mat-card-header>
+        <mat-card-title>Compañia</mat-card-title>
+        <mat-card-subtitle>{{ search.Company }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image class="search-image responsive-img" src="/assets/images/bus.jpg" alt="Template Image">
+      <mat-card-content>
+        <p> <strong>Hora de Salida:</strong> {{ getHoursToShow(available.DepartureDate) }} </p>
+        <p> <strong>Estado:</strong> {{ available.Status }} </p>
+        <p> <strong>Placa del Vehiculo:</strong> {{ available.VehiclePlaque }} </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="btn waves-effect waves-light" [disabled]="isButtonDisabled(available.Status)" (click)="buyTicket(search, available)" mat-button>Comprar</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</ng-container>

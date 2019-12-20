@@ -1,0 +1,11 @@
+.group-inputs {
+  background: rgba(255, 255, 255, 92%);
+  left: 2%;
+  padding: 25px;
+  width: 100%;
+}
+
+.trip-searcher {
+  display: inline-block;
+  width: 100%;
+}  

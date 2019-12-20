@@ -1,1 +1,90 @@
-<h1>Home Page Works</h1>
+<div class="slider">
+  <ul class="slides">
+    <li>
+      <img src="/assets/images/van.jpg" />
+      <div class="caption center-align">
+        <h3>Manage My Bus</h3>
+      </div>
+    </li>
+    <li>
+      <img src="/assets/images/women.jpg" />
+      <div class="caption left-align">
+        <h3>Manage My Bus</h3>
+      </div>
+    </li>
+    <li>
+      <img src="/assets/images/smart.jpg" />
+      <div class="caption right-align">
+        <h3>Manage My Bus</h3>
+      </div>
+    </li>
+    <li>
+      <img src="/assets/images/low.jpg" />
+      <div class="caption center-align">
+        <h3>Manage My Bus</h3>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="trip-searcher">
+  <form
+    class="group-inputs"
+    [formGroup]="searcherForm"
+    (ngSubmit)="searchResults()"
+  >
+    <div class="row trip-searcher">
+      <div class="input-field col s12 m6 l3">
+        <mat-form-field>
+          <mat-select placeholder="Origen" formControlName="origen">
+            <mat-option value="" disabled>Elija un Origen</mat-option>
+            <mat-option value="1">Manizales (MNZ)</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <mat-form-field>
+          <mat-select placeholder="Destino" formControlName="destino">
+            <mat-option value="" disabled>Elija un Destino</mat-option>
+            <mat-option *ngFor="let market of marketList" [value]="market"
+              >{{ market.Name }} ({{ market.Code }})</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col s12 m6 l3">
+        <input
+          matInput
+          [matDatepickerFilter]="myFilter"
+          formControlName="fechaSalida"
+          [matDatepicker]="picker"
+          placeholder="Elija una fecha"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <input
+          id="number_of_seats"
+          type="text"
+          class="validate"
+          formControlName="numeroPasajeros"
+        />
+        <label for="number_of_seats">Número de asientos</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s10 center-align">
+        <button
+          class="btn-large waves-effect waves-light"
+          type="submit"
+          name="action"
+          [disabled]="!searcherForm.valid"
+        >
+          Buscar
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

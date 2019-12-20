@@ -1,0 +1,54 @@
+<mat-card>
+  <table class="centered">
+    <thead>
+      <tr>
+          <th colspan="2">
+            <img class="caption" width="320" src="/assets/images/logo_extendido.png">
+          </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th colspan="2" class="center-align">Detalles de la Compra</th>
+      </tr>
+      <tr>
+        <th class="center-align">Ruta</th>
+        <td>Manizales (MNZ) - {{ ticket.destination.Name }} ({{ ticket.destination.Code }})</td>
+      </tr>
+      <tr>
+        <th class="center-align">Empresa</th>
+        <td>{{ ticket.company }}</td>
+      </tr>
+      <tr>
+        <th class="center-align">Vehiculo</th>
+        <td>{{ ticket.plaque }}</td>
+      </tr>
+      <tr>
+        <th class="center-align">Fecha y Hora</th>
+        <td>{{ formatDateForTicket(ticket.departureDate) }}</td>
+      </tr>
+      <tr>
+        <th class="center-align">Numero de Pasajeros</th>
+        <td>{{ ticket.pax }}</td>
+      </tr>
+      <tr>
+        <th class="center-align">Valor por tiquete</th>
+        <td>{{ ticket.unitPrice | currency:'COP' }}</td>
+      </tr>
+      <tr>
+        <th class="center-align">Valor total</th>
+        <td>{{ getTicketPrice() | currency:'COP' }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <button class="btn waves-effect waves-light"
+          style="width:100%; border-radius: 25px;"
+          type="submit" name="action">Confirmar Compra
+            <i class="material-icons right">send</i>
+          </button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>

@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from '../home/home.component';
 import { SiteUnderConstructionComponent } from './components/site-under-construction/site-under-construction.component';
-import { MatSelectModule } from '@angular/material'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MzButtonModule, MzInputModule } from "ngx-materialize";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialCommonsModule } from '@modules/material-commons/material-commons.module';
 
 @NgModule({
   declarations: [HomeComponent, SiteUnderConstructionComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MatSelectModule,
+    MaterialCommonsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MzButtonModule,
+    MzInputModule
   ],
   providers: []
 })

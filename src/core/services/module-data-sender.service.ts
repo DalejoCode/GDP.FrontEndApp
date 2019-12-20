@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SendDataModel } from '@modules/home/models/user-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModuleDataSenderService {
 
-  private sendDataSubject: BehaviorSubject<SendDataModel>;
+  private sendDataSubject: BehaviorSubject<any>;
 
   constructor() {
-    this.sendDataSubject = new BehaviorSubject<SendDataModel>(null);
+    this.sendDataSubject = new BehaviorSubject<any>(null);
   }
 
-  public sendANewValue(value: SendDataModel): void {
+  public sendANewValue(value: any): void {
     this.sendDataSubject.next(value);
   }
 
-  public getValuesRx(): Observable<SendDataModel> {
+  public getValuesRx(): Observable<any> {
     return this.sendDataSubject.asObservable();
   }
 }
