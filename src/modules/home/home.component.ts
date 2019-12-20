@@ -9,6 +9,10 @@ import { IMarket } from './models/market.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelect, MatFormField, MatPlaceholder, MatLabel } from '@angular/material';
 import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
+import { GDPStorageService } from '@services/storage.service';
+import { RedirectService } from '@services/redirect.service';
+import { environment } from '@envs/environment';
+import { SearchModel } from './models/search.model';
 
 @Component({
   selector: "app-home",
@@ -30,7 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private homeFilterService: HomeFilterService,
     private senderService: ModuleDataSenderService, private router: Router,
     private logger: LoggerService, private _snackBar: MatSnackBar,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private storage: GDPStorageService,
+    private redirectService: RedirectService) { }
 
   ngOnInit() {
     this.marketList = [];
@@ -43,7 +48,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   get f(): FormGroup["controls"] { return this.searcherForm.controls; }
 
   public searchResults(): void {
-    this.logger.info('Data', this.searcherForm.value)
+    this.storage.setStorage(environment.search_key,
+      new SearchModel(this.searcherForm.value['origen'],
+        this.searcherForm.value['destino'],
+        this.searcherForm.value['fechaSalida'],
+        this.searcherForm.value['numeroPasajeros']));
+
+    this.redirectService.redirectToSearchPage();
   }
 
   ngOnDestroy() {
@@ -67,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private buildForms(): void {
     this.searcherForm = this.formBuilder.group({
-      origen: ['1', Validators.required],
+      origen: [1, Validators.required],
       destino: ['', Validators.required],
       fechaSalida: ['', Validators.required],
       numeroPasajeros: ['', [Validators.required, Validators.min(1), Validators.max(7)]]

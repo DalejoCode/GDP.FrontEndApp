@@ -4,8 +4,8 @@ import { BookingComponent } from './booking.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 
 const routes: Routes = [
-  { path: '', component: BookingComponent },
-  { path: 'search', component: SearchResultComponent }
+  { path: '', pathMatch: 'full', component: BookingComponent },
+  { path: 'search', pathMatch: 'full', component: SearchResultComponent }
 ];
 
 @NgModule({
