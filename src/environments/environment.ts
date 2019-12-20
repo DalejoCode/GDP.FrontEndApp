@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   session_key: 'test-enviroment-session-key',
   search_key: 'test-enviroment-search-key',
+  ticket_key: 'test-enviroment-ticket-key',
   session_duration: 3600000,
   api_endpoint_base_url: 'https://localhost:44371/Api/',
   activate_maintenance_mode: false

@@ -15,4 +15,8 @@ export class GDPStorageService {
     public getStorage(key: string): any {
         return this.storageManager.get(key);
     }
+
+    public deleteStoragedItem(key: string): void {
+      this.storageManager.remove(key);
+    }
 }

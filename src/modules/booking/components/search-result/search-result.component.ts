@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BookingService, QueryViewModel } from '@modules/booking/services/booking.service';
-import { IMarket } from '@modules/home/models/market.model';
 import { GDPStorageService } from '@services/storage.service';
 import { environment } from '@envs/environment';
 import { SearchModel } from '@modules/home/models/search.model';
@@ -8,6 +7,7 @@ import { RedirectService } from '@services/redirect.service';
 import { Subscription } from 'rxjs';
 import { ISearchBookingModel, ITripStatus, ISearchAvailable } from '@modules/booking/models/search-booking.model';
 import { MatCard } from '@angular/material';
+import { TicketModel } from '@modules/booking/models/ticket.model';
 
 @Component({
   selector: 'app-search-result',
@@ -75,8 +75,18 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     return status !== ITripStatus.ON_SALE;
   }
 
-  public buyTicket(Company: ISearchBookingModel, ticket: ISearchAvailable): void {
+  public buyTicket(Company: ISearchBookingModel, ticketSelected: ISearchAvailable): void {
+    const ticket = new TicketModel(
+      this.searchInfo.destination,
+      Company.Company,
+      ticketSelected.DepartureDate,
+      ticketSelected.Id,
+      Company.Price,
+      ticketSelected.VehiclePlaque,
+      this.searchInfo.pax);
 
+    this.storage.setStorage(environment.ticket_key, ticket);
+    this.redirectService.redirectToBookingPage();
   }
 
 }

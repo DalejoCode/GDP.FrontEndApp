@@ -6,6 +6,7 @@ export interface ISearchBookingModel {
 }
 
 export interface ISearchAvailable {
+  Id: number;
   DepartureDate: Date;
   Status: ITripStatus;
   VehiclePlaque: string;
@@ -14,6 +15,6 @@ export interface ISearchAvailable {
 export enum ITripStatus {
   ON_SALE = "En Venta",
   SALED = "Vendido",
-  ON_ROAD = "EN Viaje",
+  ON_ROAD = "En Viaje",
   ARRIVED = "LLegó a su destino"
 }

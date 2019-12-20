@@ -3,7 +3,7 @@
 </p>
 <ng-container *ngIf="isLoading">Loading...</ng-container>
 <ng-container *ngIf="showNoResults">{{ errorMessage }}</ng-container>
-<ng-container *ngIf="!showNoResults">
+<ng-container *ngIf="!showNoResults" class="parent-search">
   <ng-container *ngFor="let search of searchResults">
     <mat-card class="example-card" *ngFor="let available of search.Availability">
       <mat-card-header>

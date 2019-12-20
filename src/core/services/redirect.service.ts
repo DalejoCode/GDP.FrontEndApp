@@ -20,4 +20,8 @@ export class RedirectService {
     this.router.navigate(['/booking/search']);
   }
 
+  public redirectToBookingPage(): void {
+    this.router.navigate(['/booking/']);
+  }
+
 }

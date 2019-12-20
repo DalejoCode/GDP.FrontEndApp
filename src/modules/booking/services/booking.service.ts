@@ -6,6 +6,7 @@ import { LoggerService } from '@services/logger.service';
 import { ISearchBookingModel, ISearchAvailable } from '../models/search-booking.model';
 import { SEARCHMOCK } from '../models/search-mock';
 import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
+import { TicketToSave } from '../models/ticket.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.
 
 export class BookingService {
   private bookingSubject: BehaviorSubject<BookingResponse>;
+  private ticketSubject: BehaviorSubject<TicketResponse>;
   constructor(private httpRequester: HttpRequesterService, private logger: LoggerService) {
     this.bookingSubject = new BehaviorSubject<BookingResponse>(null);
+    this.ticketSubject = new BehaviorSubject<TicketResponse>(null);
   }
 
   public getSearchMatches(query: QueryViewModel) {
@@ -57,13 +60,38 @@ export class BookingService {
     }
   }
 
+  // "SaveTicket"
+  public saveTicket(ticket: TicketToSave): void {
+    // this.httpRequester.postMethod(environment.api_endpoint_base_url + "SaveTicket", ticket)
+    //   .subscribe((response: ISearchBookingModel[]) => {
+    //     if(response && response.length > 0) {
+    //       this.ticketSubject.next(new TicketResponse(true, response));
+    //     } else {
+    //       this.ticketSubject.next(new TicketResponse(false, [], 'No se pudo guardar su ticket'));
+    //     }
+    //   }, (error: any) => {
+    //     this.logger.error(error);
+    //     this.ticketSubject.next(new TicketResponse(false, [], 'Upps!!!, Al parecer el servidor dejó de funcionar'));
+    //   });
+
+    this.ticketSubject.next(new TicketResponse(true, "ok", "Ticket Guardado con Exito"));
+  }
+
   public getBookingRx(): Observable<BookingResponse> {
     return this.bookingSubject.asObservable();
+  }
+
+  public getTicketRx(): Observable<TicketResponse> {
+    return this.ticketSubject.asObservable();
   }
 }
 
 export class BookingResponse {
   constructor(public success: boolean, public bookingResults: ISearchBookingModel[], public errorMessage?: string) { }
+}
+
+export class TicketResponse {
+  constructor(public success: boolean, public TicketResult: any, public info?: string) { }
 }
 
 export class QueryViewModel {

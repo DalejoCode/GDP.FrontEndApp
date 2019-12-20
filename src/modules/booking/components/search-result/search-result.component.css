@@ -1,3 +1,7 @@
+.parent-search {
+  display: inline-block;
+}
+
 .example-card {
   max-width: 45%;
   float: left;
