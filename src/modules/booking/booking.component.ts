@@ -7,6 +7,7 @@ import { TicketModel, TicketToSave } from './models/ticket.model';
 import { environment } from '@envs/environment';
 import { BookingService } from './services/booking.service';
 import { Subscription } from 'rxjs';
+import { GDPJWTService } from './services/jwt-service';
 
 @Component({
   selector: 'app-booking',
@@ -22,7 +23,9 @@ export class BookingComponent implements OnInit {
   constructor(private storage: GDPStorageService,
     private redirectService: RedirectService,
     private bookingService: BookingService,
-    private logger: LoggerService, private snack: MatSnackBar) { }
+    private logger: LoggerService,
+    private snack: MatSnackBar,
+    private jwtService: GDPJWTService) { }
 
   ngOnInit() {
     this.validateTicket();
@@ -65,6 +68,6 @@ export class BookingComponent implements OnInit {
 
   public confirmTicket(): void{
     this.bookingService.saveTicket(new TicketToSave(this.ticket.pax, "BUY",
-      this.getTicketPrice(), this.ticket.destinationOfferedId, 1));
+      this.getTicketPrice(), this.ticket.destinationOfferedId, this.jwtService.getCurrentUser().Id));
   }
 }
