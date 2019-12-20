@@ -18,7 +18,7 @@ export class HomeFilterService {
 
   public getAllMarkets(): void {
     /* this.httpRequester
-      .getMethod(environment.api_endpoint_base_url + "stations")
+      .getMethod(environment.api_endpoint_base_url + "GetAllStations")
       .subscribe((response: IMarket[]) => {
         if(response) {
           this.marketHomeSubject.next(new MarketServiceResponse(true, response));
