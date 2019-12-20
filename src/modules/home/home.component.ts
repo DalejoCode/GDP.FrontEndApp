@@ -7,7 +7,7 @@ import { LoggerService } from "@services/logger.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IMarket } from './models/market.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSelect, MatFormField, MatPlaceholder, MatLabel } from '@angular/material';
+import { MatSelect, MatFormField, MatPlaceholder, MatLabel, MatIcon, MatDatepickerToggleIcon, MatFormFieldControl } from '@angular/material';
 import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
 import { GDPStorageService } from '@services/storage.service';
 import { RedirectService } from '@services/redirect.service';
