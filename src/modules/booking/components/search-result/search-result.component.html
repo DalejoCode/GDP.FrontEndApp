@@ -10,14 +10,14 @@
         <mat-card-title>Compañia</mat-card-title>
         <mat-card-subtitle>{{ search.Company }}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image class="search-image" src="/assets/images/bus.jpg" alt="Template Image">
+      <img mat-card-image class="search-image responsive-img" src="/assets/images/bus.jpg" alt="Template Image">
       <mat-card-content>
         <p> <strong>Hora de Salida:</strong> {{ getHoursToShow(available.DepartureDate) }} </p>
         <p> <strong>Estado:</strong> {{ available.Status }} </p>
         <p> <strong>Placa del Vehiculo:</strong> {{ available.VehiclePlaque }} </p>
       </mat-card-content>
       <mat-card-actions>
-        <button [disabled]="isButtonDisabled(available.Status)" (click)="buyTicket(search, available)" mat-button>Comprar</button>
+        <button class="btn waves-effect waves-light" [disabled]="isButtonDisabled(available.Status)" (click)="buyTicket(search, available)" mat-button>Comprar</button>
       </mat-card-actions>
     </mat-card>
   </ng-container>
