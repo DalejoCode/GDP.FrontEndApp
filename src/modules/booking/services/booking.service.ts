@@ -3,9 +3,7 @@ import { HttpRequesterService } from '@services/http-requester.service';
 import { environment } from '@envs/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoggerService } from '@services/logger.service';
-import { ISearchBookingModel, ISearchAvailable } from '../models/search-booking.model';
-import { SEARCHMOCK } from '../models/search-mock';
-import { DateValidatorHelper, CompareResultEnum } from '@helpers/date-validator.helper';
+import { ISearchBookingModel } from '../models/search-booking.model';
 import { TicketToSave } from '../models/ticket.model';
 
 @Injectable({
@@ -21,60 +19,33 @@ export class BookingService {
   }
 
   public getSearchMatches(query: QueryViewModel) {
-    //  this.httpRequester
-    //   .postMethod(environment.api_endpoint_base_url + "GetAvailability", query)
-    //   .subscribe((response: ISearchBookingModel[]) => {
-    //     if(response && response.length > 0) {
-    //       this.bookingSubject.next(new BookingResponse(true, response));
-    //     } else {
-    //       this.bookingSubject.next(new BookingResponse(false, [], 'No hay viajes para su selección'));
-    //     }
-    //   }, (error: any) => {
-    //     this.logger.error(error);
-    //     this.bookingSubject.next(new BookingResponse(false, [], 'Upps!!!, Al parecer el servidor dejó de funcionar'));
-    //   });
-
-    const availability: ISearchBookingModel[] = [];
-    SEARCHMOCK.forEach(search => {
-      let currentSearch : ISearchBookingModel = null;
-      const availables: ISearchAvailable[] = [];
-      if(search.Station === query.StationId) {
-        currentSearch = search;
-        search.Availability.forEach(results => {
-          if(DateValidatorHelper.compareTwoDates(query.DepartureDate, results.DepartureDate) === CompareResultEnum.EQUAL) {
-            availables.push(results);
-          }
-        });
-      }
-
-      if(currentSearch && availables.length > 0){
-        currentSearch.Availability = availables;
-        availability.push(currentSearch);
-      }
-    });
-
-    if(availability.length > 0){
-      this.bookingSubject.next(new BookingResponse(true, availability));
-    } else {
-      this.bookingSubject.next(new BookingResponse(false, availability, 'No hay vuelos disponibles para su Selección'));
-    }
+     this.httpRequester
+      .postMethod(environment.api_endpoint_base_url + "GetAvailability", query)
+      .subscribe((response: ISearchBookingModel[]) => {
+        if(response && response.length > 0) {
+          this.bookingSubject.next(new BookingResponse(true, response));
+        } else {
+          this.bookingSubject.next(new BookingResponse(false, [], 'No hay viajes para su selección'));
+        }
+      }, (error: any) => {
+        this.logger.error(error);
+        this.bookingSubject.next(new BookingResponse(false, [], 'Upps!!!, Al parecer el servidor dejó de funcionar'));
+      });
   }
 
   // "SaveTicket"
   public saveTicket(ticket: TicketToSave): void {
-    // this.httpRequester.postMethod(environment.api_endpoint_base_url + "SaveTicket", ticket)
-    //   .subscribe((response: ISearchBookingModel[]) => {
-    //     if(response && response.length > 0) {
-    //       this.ticketSubject.next(new TicketResponse(true, response));
-    //     } else {
-    //       this.ticketSubject.next(new TicketResponse(false, [], 'No se pudo guardar su ticket'));
-    //     }
-    //   }, (error: any) => {
-    //     this.logger.error(error);
-    //     this.ticketSubject.next(new TicketResponse(false, [], 'Upps!!!, Al parecer el servidor dejó de funcionar'));
-    //   });
-
-    this.ticketSubject.next(new TicketResponse(true, "ok", "Ticket Guardado con Exito"));
+    this.httpRequester.postMethod(environment.api_endpoint_base_url + "SaveTicket", ticket)
+      .subscribe((response: ISearchBookingModel[]) => {
+        if(response && response.length > 0) {
+          this.ticketSubject.next(new TicketResponse(true, response));
+        } else {
+          this.ticketSubject.next(new TicketResponse(false, [], 'No se pudo guardar su ticket'));
+        }
+      }, (error: any) => {
+        this.logger.error(error);
+        this.ticketSubject.next(new TicketResponse(false, [], 'Upps!!!, Al parecer el servidor dejó de funcionar'));
+      });
   }
 
   public getBookingRx(): Observable<BookingResponse> {

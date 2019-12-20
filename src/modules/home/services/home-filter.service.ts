@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequesterService } from '@services/http-requester.service';
 import { environment } from '@envs/environment';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { IMarket } from '../models/market.model';
 import { MockMarkets } from '../models/mock-markets';
 import { LoggerService } from '@services/logger.service';
@@ -17,7 +17,7 @@ export class HomeFilterService {
   }
 
   public getAllMarkets(): void {
-    /* this.httpRequester
+    this.httpRequester
       .getMethod(environment.api_endpoint_base_url + "GetAllStations")
       .subscribe((response: IMarket[]) => {
         if(response) {
@@ -28,9 +28,7 @@ export class HomeFilterService {
       }, (error: any) => {
         this.logger.error(error);
         this.marketHomeSubject.next(new MarketServiceResponse(false, []));
-      }); */
-
-    this.marketHomeSubject.next(new MarketServiceResponse(true, MockMarkets));
+      });
   }
 
   public getMarketsRx(): Observable<MarketServiceResponse> {
