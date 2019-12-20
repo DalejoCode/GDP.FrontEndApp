@@ -48,6 +48,7 @@ export class BookingComponent implements OnInit {
         this.snack.open(response.info, 'Aceptar', {
           duration: 2000,
         });
+        this.redirectService.redirectToHomePage();
       } else if(response && !response.success) {
         this.snack.open(response.info, 'Aceptar', {
           duration: 2000,
