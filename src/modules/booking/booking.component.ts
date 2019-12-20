@@ -68,6 +68,6 @@ export class BookingComponent implements OnInit {
 
   public confirmTicket(): void{
     this.bookingService.saveTicket(new TicketToSave(this.ticket.pax, "BUY",
-      this.getTicketPrice(), this.ticket.destinationOfferedId, this.jwtService.getCurrentUser().Id));
+      this.getTicketPrice(), this.ticket.destinationOfferedId, (this.jwtService.getCurrentUser().Id || 1)));
   }
 }
