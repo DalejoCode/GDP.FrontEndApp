@@ -12,5 +12,5 @@ export const MockMarkets: IMarket[] = [
   { Id: 9, Name: 'Manzanares', Code: 'MAN' },
   { Id: 10, Name: 'Anserma', Code: 'ANS' },
   { Id: 11, Name: 'Viterbo', Code: 'VIT' },
-  { Id: 12, Name: 'Pereira', Code: 'PER' }
+  { Id: 12, Name: 'Riosucio', Code: 'RIO' }
 ]

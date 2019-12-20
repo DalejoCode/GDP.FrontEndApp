@@ -14,7 +14,8 @@ import { MatSnackBarModule } from '@angular/material';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+
   ]
 })
 export class MaterialCommonsModule { }

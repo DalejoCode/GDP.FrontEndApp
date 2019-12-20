@@ -1,0 +1,10 @@
+.example-card {
+  max-width: 45%;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 15px;
+}
+
+.search-image {
+  width: 400px;
+}

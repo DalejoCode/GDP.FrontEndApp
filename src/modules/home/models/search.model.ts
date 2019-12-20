@@ -1,3 +1,5 @@
+import { IMarket } from './market.model';
+
 export class SearchModel{
-  constructor(public origin: number, public destination: number, public arrivalDate: Date, public pax: number) { }
+  constructor(public origin: number, public destination: IMarket, public departureDate: Date, public pax: number) { }
 }

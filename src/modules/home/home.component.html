@@ -44,7 +44,7 @@
       <mat-form-field>
         <mat-select placeholder="Destino" formControlName="destino">
           <mat-option value="" disabled>Elija un Destino</mat-option>
-          <mat-option *ngFor="let market of marketList" [value]="market.Id">{{ market.Name }} ({{ market.Code }})</mat-option>
+          <mat-option *ngFor="let market of marketList" [value]="market">{{ market.Name }} ({{ market.Code }})</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
