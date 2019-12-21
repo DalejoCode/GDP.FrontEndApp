@@ -45,7 +45,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     const search = this.storage.getStorage(environment.search_key) as SearchModel;
     if(search) {
       this.searchInfo = search
-      this.bookingService.getSearchMatches(new QueryViewModel(search.destination.Id, search.departureDate));
+      this.bookingService.getSearchMatches(new QueryViewModel(search.destination.id, search.departureDate));
     } else {
       this.redirectService.redirectToHomePage();
     }

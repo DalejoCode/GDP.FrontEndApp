@@ -1,5 +1,5 @@
 <p *ngIf="!isLoading" class="route-info">
-  Mostrando resultados de <strong>Manizales (MNZ)</strong> a <strong>{{ searchInfo.destination.Name }} ({{ searchInfo.destination.Code }})</strong>
+  Mostrando resultados de <strong>Manizales (MNZ)</strong> a <strong>{{ searchInfo.destination.name }} ({{ searchInfo.destination.code }})</strong>
 </p>
 <ng-container *ngIf="isLoading">Loading...</ng-container>
 <ng-container *ngIf="showNoResults">{{ errorMessage }}</ng-container>

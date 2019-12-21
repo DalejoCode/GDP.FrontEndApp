@@ -1,16 +1,16 @@
 import { IMarket } from './market.model';
 
 export const MockMarkets: IMarket[] = [
-  { Id: 1, Name: 'Medellin', Code: 'MED' },
-  { Id: 2, Name: 'Pereira', Code: 'PER' },
-  { Id: 3, Name: 'Bogota', Code: 'BOG' },
-  { Id: 4, Name: 'Barranquilla', Code: 'BAR' },
-  { Id: 5, Name: 'Santa Marta', Code: 'STM' },
-  { Id: 6, Name: 'Cartagena', Code: 'CAR' },
-  { Id: 7, Name: 'Cartago', Code: 'CTG' },
-  { Id: 8, Name: 'Cucuta', Code: 'CCT' },
-  { Id: 9, Name: 'Manzanares', Code: 'MAN' },
-  { Id: 10, Name: 'Anserma', Code: 'ANS' },
-  { Id: 11, Name: 'Viterbo', Code: 'VIT' },
-  { Id: 12, Name: 'Riosucio', Code: 'RIO' }
+  { id: 1, name: 'Medellin', code: 'MED' },
+  { id: 2, name: 'Pereira', code: 'PER' },
+  { id: 3, name: 'Bogota', code: 'BOG' },
+  { id: 4, name: 'Barranquilla', code: 'BAR' },
+  { id: 5, name: 'Santa Marta', code: 'STM' },
+  { id: 6, name: 'Cartagena', code: 'CAR' },
+  { id: 7, name: 'Cartago', code: 'CTG' },
+  { id: 8, name: 'Cucuta', code: 'CCT' },
+  { id: 9, name: 'Manzanares', code: 'MAN' },
+  { id: 10, name: 'Anserma', code: 'ANS' },
+  { id: 11, name: 'Viterbo', code: 'VIT' },
+  { id: 12, name: 'Riosucio', code: 'RIO' }
 ]
